@@ -1,6 +1,14 @@
 public class MyUtils {
-
+  // все це набагато простіше робити регулярними виразами
+  // Переглянь на hyperskill.org це ось уроки з практичними завданнями:
+  // https://hyperskill.org/learn/step/7580
+  // https://hyperskill.org/learn/step/3670
+  // https://hyperskill.org/learn/step/3674
+  // https://hyperskill.org/learn/step/3680
+  // https://hyperskill.org/learn/step/3687
   public static boolean isConsonant(char isConsonant) {
+    // в таких випадках можна створити final static Set<Character>, наповнити
+    // елементами і потім перевіряти методом contains чи елемент є у множині, чи ні
     char[] consonants = {'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm',
         'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'z'};
     for (char consonant : consonants) {
@@ -12,6 +20,7 @@ public class MyUtils {
   }
 
   public static boolean haveDash(String word) {
+    // return word.contains("-"); зробить те саме
     char[] chars = word.toCharArray();
     for (char dash : chars) {
       if (dash == '-') {
@@ -22,6 +31,7 @@ public class MyUtils {
   }
 
   public static boolean hasPunctuationsMarks(String word) {
+    // якщо перевіряється слово, то знаки пунутуації можуть бути лише в останньому символі
     char[] punctuationsMarks = {'.', ',', '!', '?'};
     char last = word.charAt(word.length() - 1);
     for (char punctuationsMark : punctuationsMarks) {
