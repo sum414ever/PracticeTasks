@@ -1,25 +1,79 @@
 public class MyUtils {
 
   public boolean verifyBrackets(String text) {
+
     text = text.replaceAll("\\\\[\\Q[](){}\\E]", "");
-    // це класичний алгоритм на застосування структури даних стек.
-    // подивись https://www.geeksforgeeks.org/check-for-balanced-parentheses-in-an-expression/
-    if (text.length() % 2 != 0) {
-      return false;
+
+    char exp[] = text.toCharArray();
+
+    return areParenthesisBalanced(exp);
+  }
+
+   private boolean isMatchingPair(char character1, char character2) {
+    if (character1 == '(' && character2 == ')') {
+      return true;
+    } else if (character1 == '{' && character2 == '}') {
+      return true;
+    } else if (character1 == '[' && character2 == ']') {
+      return true;
     } else {
-
-      int size = 0;
-      do {
-        size = text.length();
-        text = text.replace("{}", ""); // це працюватиме лише якщо там нема інших символів
-        text = text.replace("()", ""); // до того ж для довгого рядка за одну ітерацію буде
-        text = text.replace("[]", ""); // видалятись лише по два символи і створюватиметься
-      } while (size != text.length()); // новий рядок. Тому ефективність буде квадратичною O(n^2)
-
-      return text.length() == 0;
+      return false;
     }
   }
 
+   private boolean areParenthesisBalanced(char exp[]) {
+    BalancedParan.stack st = new BalancedParan.stack();
 
+    for (int i = 0; i < exp.length; i++) {
+
+      if (exp[i] == '{' || exp[i] == '(' || exp[i] == '[') {
+        st.push(exp[i]);
+      }
+
+      if (exp[i] == '}' || exp[i] == ')' || exp[i] == ']') {
+
+        if (st.isEmpty()) {
+          return false;
+        } else if (!isMatchingPair(st.pop(), exp[i])) {
+          return false;
+        }
+      }
+    }
+
+    if (st.isEmpty()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  static class stack {
+
+    int top = -1;
+    char items[] = new char[100];
+
+    void push(char x) {
+      if (top == 99) {
+        System.out.println("Stack full");
+      } else {
+        items[++top] = x;
+      }
+    }
+
+    char pop() {
+      if (top == -1) {
+        System.out.println("Underflow error");
+        return '\0';
+      } else {
+        char element = items[top];
+        top--;
+        return element;
+      }
+    }
+
+    boolean isEmpty() {
+      return (top == -1) ? true : false;
+    }
+  }
 }
 
