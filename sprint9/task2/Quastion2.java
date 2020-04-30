@@ -4,9 +4,7 @@ public class MyUtils {
 
     text = text.replaceAll("\\\\[\\Q[](){}\\E]", "");
 
-    char exp[] = text.toCharArray();
-
-    return areParenthesisBalanced(exp);
+    return areParenthesisBalanced(text.toCharArray());
   }
 
    private boolean isMatchingPair(char character1, char character2) {
