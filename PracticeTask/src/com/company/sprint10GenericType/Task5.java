@@ -168,42 +168,42 @@ class PersonComparator implements Comparator<Person> {
 
   @Override
   public int compare(Person o1, Person o2) {
-    /*if (o1.getName().compareTo(o2.getName()) == 0) {    // подвійний виклик
-      return Integer.compare(o1.getAge(), o2.getAge());
-    }
-    return o1.getName().compareTo(o2.getName());        // подвійний виклик
-    */
+
     int res = o1.getName().compareTo(o2.getName());
     if (res == 0) {
       res = Integer.compare(o1.getAge(), o2.getAge());
     }
     return res;
+  }
 }
 
 class EmployeeComparator implements Comparator<Employee> {
 
-  private static final // потрібен виключно для внутрішнього споживання - треба приховати
-  PersonComparator pc = new PersonComparator();
+  private static final PersonComparator pc = new PersonComparator();
 
   @Override
   public int compare(Employee o1, Employee o2) {
-    if (pc.compare(o1, o2) == 0) {                            // знов подвійний виклик. Див. вище
-      return Double.compare(o1.getSalary(), o2.getSalary());
+
+    int res = pc.compare(o1, o2);
+    if ( res == 0) {
+      res = Double.compare(o1.getSalary(), o2.getSalary());
     }
-    return pc.compare(o1, o2);                                // подвійний виклик
+    return res;
   }
 }
 
 class DeveloperComparator implements Comparator<Developer> {
-  // те саме. Поле можно зробити статичним та фінальним і приховати приватним
-  EmployeeComparator ec = new EmployeeComparator();
+
+    private static final EmployeeComparator ec = new EmployeeComparator();
 
   @Override
   public int compare(Developer o1, Developer o2) {
-    if (ec.compare(o1, o2) == 0) {
-      return o1.getLevel().compareTo(o2.getLevel());
+    int res =ec.compare(o1, o2);
+
+    if (res == 0) {
+      res =  o1.getLevel().compareTo(o2.getLevel());
     }
-    return ec.compare(o1, o2);
+    return res;
   }
 }
 
