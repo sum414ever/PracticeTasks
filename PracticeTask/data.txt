@@ -1,0 +1,3 @@
+This is text fragment
+that contains some text data
+and can be read!
