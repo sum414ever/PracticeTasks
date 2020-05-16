@@ -23,11 +23,11 @@ class MyUtils3 {
   public int sumEven(Stream<IntStream> stream) {
 
     return stream
-        .map(x -> x.filter(y -> y > 0))
-        .map(x -> x.filter(y -> y % 2 == 0))
-        .map(IntStream::sorted)
-        .map(x -> x.limit(1))
-        .flatMapToInt(i -> i)
+        .map(x -> x.filter(y -> y > 0))       // можна об'єднати ці 
+        .map(x -> x.filter(y -> y % 2 == 0))  // два фільтри в один вираз y > 0 && y % 2 == 0
+        .map(IntStream::sorted)   // замість сортувати можна було скористатись min().orElse(0)
+        .map(x -> x.limit(1))     // над кожним стрімом. В результаті стрім перетворюємо на число
+        .flatMapToInt(i -> i)     // тому це треба огорнути в mapToInt, до якого вже застосувати сумування
         .sum();
   }
 }
