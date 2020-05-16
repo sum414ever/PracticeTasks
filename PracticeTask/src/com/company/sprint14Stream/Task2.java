@@ -48,12 +48,12 @@ class MyUtils2 {
 
     List<PhoneNumber> phoneNumberList = PhoneNumber.getAllNumbers(list);
 
-    if (phoneNumberList.isEmpty()) {
+    if (phoneNumberList.isEmpty()) {   // не має бути проблемою стрімити порожню колекцію
       return Collections.emptyMap();
     }
     return phoneNumberList.stream()
-        .filter(Objects::nonNull)
-        .distinct()
+        .filter(Objects::nonNull) // тут нали вже відфільтровані, аде колекцію ти готуєш сам
+        .distinct()               // можна було збирати не в List, а в Set, тоді дуплікатів не було б вже в колекції
         .sorted(Comparator.comparing(PhoneNumber::getPhoneNumber))
         .collect(Collectors.groupingBy(
             PhoneNumber::getAreaCode,
@@ -78,7 +78,7 @@ class MyUtils2 {
           .filter(Objects::nonNull)
           .map(x -> x.replace(" ", ""))
           .filter(x -> !x.isEmpty())
-          .map(y -> y.replaceAll("\\D+", ""))
+          .map(y -> y.replaceAll("\\D+", "")) // можна було 79 рядок прибрати, а 80 після цього поставити, адже \D прибере й пробіли
           .map(x -> {
             if (x.length() == 10) {
               return new PhoneNumber(x.substring(0, 3), x.substring(3));
@@ -88,7 +88,7 @@ class MyUtils2 {
               return new PhoneNumber("err", x);
             }
           })
-          .collect(Collectors.toList());
+          .collect(Collectors.toList()); // toSet допоможе позбутись дуплікатів вже тут
     }
 
     public String getAreaCode() {
