@@ -34,7 +34,7 @@ class MyUtils1 {
 
   public Stream<String> nameList(Map<String, Stream<String>> map) {
     if(map == null){
-      throw new NullPointerException();
+      throw new NullPointerException(); // це навіть зайве, бо далі NPE буде викинуте у 41 рядку в разі чого
     }
 
     List<String> participants = new ArrayList<>();
@@ -43,13 +43,16 @@ class MyUtils1 {
         participants.addAll(v.collect(Collectors.toList()));
       }
     });
+    
+    // можна було замість participants.stream()... :
+    // map.values().stream().flatMap(stream -> stream)... 
 
     return participants.stream()
-        .filter(Objects::nonNull)
+        .filter(Objects::nonNull)  // тут вже налів не буде, бо всі відфільтрувались у 42 рядку
         .filter(x->!x.isEmpty())
         .map(x -> x.replace(" ", ""))
         .filter(x->!x.equals(""))
-        .map(String::trim)
+        .map(String::trim)         // у рядку 50 вже позбулись пробілів
         .map(String::toLowerCase)
         .map(x -> x.substring(0, 1).toUpperCase() + x.substring(1))
         .sorted()
